@@ -31,7 +31,6 @@ export function PortfolioGrid({ images, compact = false }: { images: PortfolioIm
             <Image unoptimized src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" sizes="(max-width: 560px) 50vw, (max-width: 1100px) 33vw, 25vw" />
             <span className="portfolio-overlay">
               <span>{image.artistName}</span>
-              <span aria-hidden="true">↗</span>
             </span>
           </button>
         ))}

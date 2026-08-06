@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageCta } from "@/app/components/PageCta";
 import { PortfolioGrid } from "@/app/components/PortfolioGrid";
@@ -16,8 +16,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const artist = getArtist(slug);
   if (!artist) return {};
   return {
-    title: artist.name,
-    description: `Explore custom tattoo work by ${artist.name} at After Light Tattoo and request a consultation.`,
+    title: `${artist.name} | Tattoo Artist in White Oak, PA`,
+    description: `Explore tattoo work by ${artist.name} at After Light Tattoo in White Oak, Pennsylvania, and request a consultation.`,
+    alternates: { canonical: `/artists/${artist.slug}` },
   };
 }
 
@@ -30,46 +31,32 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
     <main>
       <section className="artist-profile-hero section-shell">
         <div className="artist-profile-image">
-          <Image unoptimized src={artist.profileImage.src} alt={artist.profileAlt} width={artist.profileImage.width} height={artist.profileImage.height} priority sizes="(max-width: 820px) 100vw, 42vw" />
-          <span className="profile-orbit" aria-hidden="true" />
+          <Image unoptimized src={artist.profileImage.src} alt={artist.profileAlt} width={artist.profileImage.width} height={artist.profileImage.height} priority sizes="(max-width: 760px) 100vw, 42vw" />
         </div>
         <div className="artist-profile-copy">
-          <p className="eyebrow">After Light artist</p>
+          <p className="eyebrow">After Light Tattoo</p>
           <h1>{artist.name}</h1>
-          <p className="profile-bio">{artist.bio}</p>
-          <div className="profile-details">
-            <div>
-              <span>Preferred styles</span>
-              {artist.specialties.map((specialty) => <p key={specialty}>{specialty}</p>)}
-            </div>
-            <div>
-              <span>Social</span>
-              {artist.socialLinks.instagram ? <a href={artist.socialLinks.instagram}>Instagram ↗</a> : <p>Instagram link — add before launch</p>}
-            </div>
-            <div>
-              <span>Booking</span>
-              <p>Consultation details and artist availability are confirmed directly by the studio.</p>
-            </div>
-          </div>
+          {artist.bio && <p className="profile-bio">{artist.bio}</p>}
+          {artist.specialties.length > 0 && (
+            <div className="profile-meta"><span>Specialties</span><p>{artist.specialties.join(" · ")}</p></div>
+          )}
+          {artist.socialLinks.instagram && (
+            <a className="text-link" href={artist.socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${artist.name} on Instagram in a new tab`}>Instagram</a>
+          )}
           <div className="button-row">
-            <Link className="button button-gold" href={artist.bookingLink}>Book with {artist.name.split(" ")[0]} <span aria-hidden="true">↗</span></Link>
-            <a className="button button-ghost" href="#portfolio">View portfolio <span aria-hidden="true">↓</span></a>
+            <Link className="button button-gold" href={artist.bookingLink}>Book With {artist.name.split(" ")[0]}</Link>
+            <a className="text-link" href="#portfolio">View Work</a>
           </div>
         </div>
       </section>
 
-      <section className="work-section section-block" id="portfolio" aria-labelledby="portfolio-heading">
+      <section className="featured-work section-block" id="portfolio" aria-labelledby="portfolio-heading">
         <div className="section-shell">
-          <SectionHeading
-            eyebrow={`${artist.name} · Portfolio`}
-            title="Selected work."
-            description={`All ${artist.portfolioImages.length} images below belong exclusively to ${artist.name}’s supplied portfolio.`}
-            id="portfolio-heading"
-          />
+          <SectionHeading eyebrow={`${artist.name} portfolio`} title="Tattoo work." id="portfolio-heading" />
           <PortfolioGrid images={artist.portfolioImages} />
         </div>
       </section>
-      <PageCta eyebrow={`Book with ${artist.name}`} title="Have a piece in mind?" description="Share your concept, placement, references, and availability to begin the consultation process." />
+      <PageCta title={`Book with ${artist.name}`} description="Share your concept, placement, references, and availability to request a consultation." />
     </main>
   );
 }

@@ -1,70 +1,61 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Footer } from "@/app/components/Footer";
 import { Header } from "@/app/components/Header";
 import { studio } from "@/app/data/studio";
 import "./globals.css";
 
-async function requestOrigin() {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
-  return `${protocol}://${host}`;
-}
+export const metadata: Metadata = {
+  metadataBase: new URL(studio.siteUrl),
+  title: {
+    default: "After Light Tattoo | Tattoo Studio in White Oak, PA",
+    template: "%s | After Light Tattoo",
+  },
+  description: "Explore custom tattoo work from the artists at After Light Tattoo in White Oak, Pennsylvania. View artist portfolios and request a consultation.",
+  alternates: { canonical: "/" },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: studio.name,
+    title: "After Light Tattoo | Tattoo Studio in White Oak, PA",
+    description: "Explore custom tattoo work from the artists at After Light Tattoo in White Oak, Pennsylvania.",
+    url: studio.siteUrl,
+    images: [{
+      url: "/images/branding/after-light-tattoo-logo.png",
+      width: 600,
+      height: 600,
+      alt: "After Light Tattoo logo",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "After Light Tattoo | White Oak, PA",
+    description: "View artist portfolios and request a custom tattoo consultation.",
+    images: ["/images/branding/after-light-tattoo-logo.png"],
+  },
+};
 
-export async function generateMetadata(): Promise<Metadata> {
-  const origin = await requestOrigin();
-  return {
-    metadataBase: new URL(origin),
-    title: {
-      default: "After Light Tattoo | Custom Tattoo Studio",
-      template: "%s | After Light Tattoo",
-    },
-    description: "Professional custom tattooing in a clean, welcoming studio. Explore artist portfolios and request a consultation with After Light Tattoo.",
-    icons: {
-      icon: "/icon.png",
-      shortcut: "/icon.png",
-      apple: "/icon.png",
-    },
-    openGraph: {
-      type: "website",
-      siteName: "After Light Tattoo",
-      title: "After Light Tattoo | Art That Lives Beyond the Light",
-      description: "Custom tattooing by four artists in a professional, welcoming studio.",
-      url: origin,
-      images: [{ url: `${origin}/og.png`, width: 1200, height: 630, alt: "After Light Tattoo — Art That Lives Beyond the Light" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "After Light Tattoo",
-      description: "Art that lives beyond the light.",
-      images: [`${origin}/og.png`],
-    },
-  };
-}
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "TattooParlor",
+  name: studio.name,
+  url: studio.siteUrl,
+  image: `${studio.siteUrl}/images/branding/after-light-tattoo-logo.png`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: studio.address.street,
+    addressLocality: studio.address.city,
+    addressRegion: studio.address.region,
+    postalCode: studio.address.postalCode,
+    addressCountry: studio.address.country,
+  },
+  sameAs: [studio.social.facebook, studio.social.instagram],
+};
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const origin = await requestOrigin();
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "TattooParlor",
-    name: studio.name,
-    url: origin,
-    image: `${origin}/og.png`,
-    ...(studio.contact.email ? { email: studio.contact.email } : {}),
-    ...(studio.contact.phone ? { telephone: studio.contact.phone } : {}),
-    ...(studio.address.street ? {
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: studio.address.street,
-        addressLocality: studio.address.city,
-        addressRegion: studio.address.region,
-        postalCode: studio.address.postalCode,
-        addressCountry: studio.address.country,
-      },
-    } : {}),
-  };
-
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body>

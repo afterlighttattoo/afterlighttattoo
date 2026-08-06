@@ -1,6 +1,5 @@
 import type { StaticImageData } from "next/image";
 
-import robProfile from "@/images/rob-duncan/rob.PNG";
 import rob01 from "@/images/rob-duncan/artwork/10484.jpg.jpeg";
 import rob02 from "@/images/rob-duncan/artwork/20250921_155116.jpg.jpeg";
 import rob03 from "@/images/rob-duncan/artwork/20251023_150239.jpg.jpeg";
@@ -104,7 +103,7 @@ export const artists: Artist[] = [
   {
     name: "Rob Duncan",
     slug: "rob-duncan",
-    profileImage: imageAsset(robProfile, 350, 543),
+    profileImage: { src: "/images/rob-duncan/rob.png", width: 350, height: 543 },
     profileAlt: "Rob Duncan tattooing a client",
     artworkDirectory: "/images/rob-duncan/artwork",
     portfolioImages: portfolio("Rob Duncan", "rob-duncan", [
@@ -114,8 +113,8 @@ export const artists: Artist[] = [
       ["20260104_130214.jpg.jpeg", rob10, 450, 600], ["20260117_193829.jpg.jpeg", rob11, 450, 600], ["20260517_113825.jpg.jpeg", rob12, 1536, 2048],
       ["20260614_173305.jpg.jpeg", rob13, 450, 600], ["20260629_132754.jpg.jpeg", rob14, 450, 600],
     ]),
-    bio: "Artist biography coming soon. Add Rob’s background, creative approach, and the kind of collaboration clients can expect before launch.",
-    specialties: ["Preferred tattoo styles — add before launch"],
+    bio: "",
+    specialties: [],
     socialLinks: { instagram: "" },
     bookingLink: "/booking?artist=rob-duncan",
   },
@@ -133,8 +132,8 @@ export const artists: Artist[] = [
       ["Screenshot_20260720_195551_Messages.jpg.jpeg", josh09, 277, 600], ["Screenshot_20260720_195554_Messages.jpg.jpeg", josh10, 277, 600],
       ["Screenshot_20260720_195557_Messages.jpg.jpeg", josh11, 945, 2048],
     ]),
-    bio: "Artist biography coming soon. Add Josh’s background, creative approach, and the kind of collaboration clients can expect before launch.",
-    specialties: ["Preferred tattoo styles — add before launch"],
+    bio: "",
+    specialties: [],
     socialLinks: { instagram: "" },
     bookingLink: "/booking?artist=josh-mann",
   },
@@ -150,8 +149,8 @@ export const artists: Artist[] = [
       ["Screenshot_20260720_202259_Messages.jpg.jpeg", amanda05, 945, 2048], ["Screenshot_20260720_202301_Messages.jpg.jpeg", amanda06, 277, 600],
       ["Screenshot_20260720_202304_Messages.jpg.jpeg", amanda07, 277, 600], ["Screenshot_20260720_202306_Messages.jpg.jpeg", amanda08, 277, 600],
     ]),
-    bio: "Artist biography coming soon. Add Amanda’s background, creative approach, and the kind of collaboration clients can expect before launch.",
-    specialties: ["Preferred tattoo styles — add before launch"],
+    bio: "",
+    specialties: [],
     socialLinks: { instagram: "" },
     bookingLink: "/booking?artist=amanda-simonich",
   },
@@ -166,8 +165,8 @@ export const artists: Artist[] = [
       ["10655.jpg.jpeg", aly05, 240, 320], ["10656.jpg.jpeg", aly06, 240, 320], ["10657.jpg.jpeg", aly07, 240, 320], ["10658.jpg.jpeg", aly08, 480, 308],
       ["10659.jpg.jpeg", aly09, 240, 320], ["10660.jpg.jpeg", aly10, 240, 320],
     ]),
-    bio: "Artist biography coming soon. Add Aly’s background, creative approach, and the kind of collaboration clients can expect before launch.",
-    specialties: ["Preferred tattoo styles — add before launch"],
+    bio: "",
+    specialties: [],
     socialLinks: { instagram: "" },
     bookingLink: "/booking?artist=aly-wisler",
   },
