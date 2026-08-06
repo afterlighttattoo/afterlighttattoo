@@ -2,13 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArtistCard } from "@/app/components/ArtistCard";
 import { ExternalActions } from "@/app/components/ExternalActions";
-import { PortfolioGrid } from "@/app/components/PortfolioGrid";
+import { FeaturedArtworkCarousel } from "@/app/components/FeaturedArtworkCarousel";
 import { SectionHeading } from "@/app/components/SectionHeading";
-import { artists, featuredArtwork } from "@/app/data/artists";
+import { artists, carouselArtwork } from "@/app/data/artists";
 import { studio } from "@/app/data/studio";
 
 export default function Home() {
-  const heroArtwork = featuredArtwork[0];
   return (
     <main>
       <section className="home-hero section-shell" aria-labelledby="hero-title">
@@ -29,31 +28,13 @@ export default function Home() {
             <Link className="text-link" href="/artists">View Artists</Link>
           </div>
         </div>
-        <figure className="home-hero-image">
-          <Image
-            unoptimized
-            src={heroArtwork.src}
-            alt={heroArtwork.alt}
-            width={heroArtwork.width}
-            height={heroArtwork.height}
-            priority
-            sizes="(max-width: 760px) 100vw, 50vw"
-          />
-          <figcaption>Tattoo by {heroArtwork.artistName}</figcaption>
-        </figure>
+        <FeaturedArtworkCarousel images={carouselArtwork} />
       </section>
 
       <section className="section-shell section-block home-artists" aria-labelledby="artists-heading">
         <SectionHeading eyebrow="Artists" title="Find your artist." id="artists-heading" link={{ href: "/artists", label: "All Artists" }} />
         <div className="artist-grid">
           {artists.map((artist, index) => <ArtistCard artist={artist} index={index} key={artist.slug} />)}
-        </div>
-      </section>
-
-      <section className="featured-work section-block" aria-labelledby="work-heading">
-        <div className="section-shell">
-          <SectionHeading eyebrow="Featured work" title="Recent tattoos." id="work-heading" link={{ href: "/gallery", label: "View Full Gallery" }} />
-          <PortfolioGrid images={featuredArtwork.slice(0, 6)} compact />
         </div>
       </section>
 

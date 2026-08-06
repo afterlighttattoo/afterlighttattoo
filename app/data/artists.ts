@@ -174,16 +174,13 @@ export const artists: Artist[] = [
 
 export const allArtwork = artists.flatMap((artist) => artist.portfolioImages);
 
-export const featuredArtwork = [
-  artists[0].portfolioImages[13],
-  artists[2].portfolioImages[0],
-  artists[3].portfolioImages[7],
-  artists[1].portfolioImages[0],
-  artists[0].portfolioImages[11],
-  artists[2].portfolioImages[2],
-  artists[3].portfolioImages[4],
-  artists[1].portfolioImages[6],
-];
+const longestPortfolio = Math.max(...artists.map((artist) => artist.portfolioImages.length));
+
+export const carouselArtwork = Array.from({ length: longestPortfolio }, (_, imageIndex) =>
+  artists
+    .map((artist) => artist.portfolioImages[imageIndex])
+    .filter((image): image is PortfolioImage => Boolean(image)),
+).flat();
 
 export function getArtist(slug: string) {
   return artists.find((artist) => artist.slug === slug);
