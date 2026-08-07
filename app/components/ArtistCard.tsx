@@ -13,13 +13,12 @@ export function ArtistCard({ artist, index = 0 }: { artist: Artist; index?: numb
           width={artist.profileImage.width}
           height={artist.profileImage.height}
           loading={index > 1 ? "lazy" : "eager"}
-          sizes="(max-width: 560px) calc(100vw - 32px), (max-width: 960px) 50vw, 25vw"
+          sizes="(max-width: 560px) 50vw, (max-width: 960px) 50vw, 25vw"
         />
       </Link>
       <div className="artist-card-body">
         <h3><Link href={`/artists/${artist.slug}`}>{artist.name}</Link></h3>
-        {artist.specialties.length > 0 && <p className="artist-specialty">{artist.specialties.join(" · ")}</p>}
-        <Link className="text-link" href={`/artists/${artist.slug}`}>View Work</Link>
+        <Link className="text-link" href={`/artists/${artist.slug}`}>View Work <span aria-hidden="true">→</span></Link>
       </div>
     </article>
   );

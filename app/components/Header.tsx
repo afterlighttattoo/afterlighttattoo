@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -7,13 +8,18 @@ import { useEffect, useRef, useState } from "react";
 import { BrandMark } from "./BrandMark";
 import { ExternalActions } from "./ExternalActions";
 
-const navigation = [
+const leftNavigation = [
   ["Home", "/"],
   ["Artists", "/artists"],
   ["Gallery", "/gallery"],
+];
+
+const rightNavigation = [
   ["About", "/about"],
   ["Book a Consultation", "/booking"],
 ];
+
+const navigation = [...leftNavigation, ...rightNavigation];
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -42,11 +48,19 @@ export function Header() {
       <div className="header-inner">
         <div className="mobile-header-brand"><BrandMark /></div>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {navigation.map(([label, href]) => (
-            <Link className={href === "/booking" ? "nav-book" : undefined} href={href} key={href} aria-current={isActive(href) ? "page" : undefined}>
-              {label}
-            </Link>
-          ))}
+          <div className="desktop-nav-side desktop-nav-left">
+            {leftNavigation.map(([label, href]) => (
+              <Link href={href} key={href} aria-current={isActive(href) ? "page" : undefined}>{label}</Link>
+            ))}
+          </div>
+          <Link className="desktop-header-logo" href="/" aria-label="After Light Tattoo home">
+            <Image unoptimized src="/images/branding/after-light-tattoo-logo.png" alt="" width={600} height={600} priority />
+          </Link>
+          <div className="desktop-nav-side desktop-nav-right">
+            {rightNavigation.map(([label, href]) => (
+              <Link className={href === "/booking" ? "nav-book" : undefined} href={href} key={href} aria-current={isActive(href) ? "page" : undefined}>{label}</Link>
+            ))}
+          </div>
         </nav>
         <button ref={menuButtonRef} className="mobile-menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close navigation" : "Open navigation"}>
           {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}

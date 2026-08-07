@@ -176,9 +176,16 @@ export const allArtwork = artists.flatMap((artist) => artist.portfolioImages);
 
 const longestPortfolio = Math.max(...artists.map((artist) => artist.portfolioImages.length));
 
+const slideshowPortfolios = artists.map((artist) =>
+  artist.portfolioImages
+    .map((image, originalIndex) => ({ image, originalIndex }))
+    .sort((a, b) => (b.image.width * b.image.height) - (a.image.width * a.image.height) || a.originalIndex - b.originalIndex)
+    .map(({ image }) => image),
+);
+
 export const carouselArtwork = Array.from({ length: longestPortfolio }, (_, imageIndex) =>
-  artists
-    .map((artist) => artist.portfolioImages[imageIndex])
+  slideshowPortfolios
+    .map((portfolioImages) => portfolioImages[imageIndex])
     .filter((image): image is PortfolioImage => Boolean(image)),
 ).flat();
 

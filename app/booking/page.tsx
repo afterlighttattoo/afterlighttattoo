@@ -24,7 +24,6 @@ export default async function BookingPage({ searchParams }: { searchParams: Prom
           <h2>{studio.name}</h2>
           <address>{studio.address.street}<br />{studio.address.city}, {studio.address.region} {studio.address.postalCode}</address>
           <ExternalActions directions className="booking-actions" />
-          <p className="booking-contact-note">For help while online consultation delivery is being finalized, contact the studio through Instagram or Facebook.</p>
         </aside>
       </section>
     </main>
