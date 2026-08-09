@@ -117,19 +117,35 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
             aria-label={`Open full image: ${active.alt}`}
           >
             {images.map((image, index) => isPreloaded(index, activeIndex, images.length) ? (
-              <Image
-                className={`${index === activeIndex ? "is-active" : ""} ${needsContainedPresentation(image) ? "is-contained" : ""}`.trim()}
+              <span
+                className={`featured-carousel-slide ${index === activeIndex ? "is-active" : ""} ${needsContainedPresentation(image) ? "is-contained" : ""}`.trim()}
                 key={`${image.artistSlug}-${image.filename}`}
-                unoptimized
-                src={image.src}
-                alt={index === activeIndex ? image.alt : ""}
-                width={image.width}
-                height={image.height}
-                loading="eager"
-                draggable={false}
-                sizes="100vw"
                 aria-hidden={index !== activeIndex}
-              />
+              >
+                <Image
+                  className="artwork-backdrop"
+                  unoptimized
+                  src={image.src}
+                  alt=""
+                  width={image.width}
+                  height={image.height}
+                  loading="eager"
+                  draggable={false}
+                  sizes="(max-width: 760px) 100vw, 50vw"
+                  aria-hidden="true"
+                />
+                <Image
+                  className="artwork-foreground"
+                  unoptimized
+                  src={image.src}
+                  alt={index === activeIndex ? image.alt : ""}
+                  width={image.width}
+                  height={image.height}
+                  loading="eager"
+                  draggable={false}
+                  sizes="(max-width: 760px) 90vw, 46vw"
+                />
+              </span>
             ) : null)}
           </button>
         </div>

@@ -54,7 +54,7 @@ export function Header() {
             ))}
           </div>
           <Link className="desktop-header-logo" href="/" aria-label="After Light Tattoo home">
-            <Image unoptimized src="/images/branding/after-light-tattoo-logo.png" alt="" width={600} height={600} priority />
+            <Image unoptimized src="/images/branding/after-light-mark.png" alt="" width={330} height={330} priority />
           </Link>
           <div className="desktop-nav-side desktop-nav-right">
             {rightNavigation.map(([label, href]) => (
