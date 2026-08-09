@@ -12,7 +12,9 @@ function isPreloaded(index: number, activeIndex: number, length: number) {
 }
 
 function needsContainedPresentation(image: PortfolioImage) {
-  return image.width * image.height < 500_000;
+  const aspectRatio = image.width / image.height;
+
+  return aspectRatio < 1.2 || image.width < 900 || image.height < 700;
 }
 
 export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }) {

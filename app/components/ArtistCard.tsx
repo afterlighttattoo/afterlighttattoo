@@ -18,6 +18,9 @@ export function ArtistCard({ artist, index = 0 }: { artist: Artist; index?: numb
       </Link>
       <div className="artist-card-body">
         <h3><Link href={`/artists/${artist.slug}`}>{artist.name}</Link></h3>
+        <div className="artist-card-specialty-slot">
+          {artist.homepageSpecialties.length > 0 && <p className="artist-home-specialties">{artist.homepageSpecialties.join(" • ")}</p>}
+        </div>
         <Link className="text-link" href={`/artists/${artist.slug}`}>View Work <span aria-hidden="true">→</span></Link>
       </div>
     </article>

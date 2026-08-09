@@ -184,15 +184,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .desktop-nav .nav-book:hover, .desktop-nav .nav-book[aria-current="page"] { background: var(--gold); color: #090909; }
 .desktop-header-logo {
   position: absolute;
-  z-index: 2;
-  top: 2px;
+  z-index: 10;
+  top: 0;
   left: 50%;
   display: block;
-  width: 108px;
-  height: 108px;
+  width: 106px;
+  height: 106px;
   transform: translateX(-50%);
 }
-.desktop-header-logo img { width: 100%; height: 100%; object-fit: contain; }
+.desktop-header-logo::before { position: absolute; z-index: -1; inset: -8px; border-radius: 50%; background: radial-gradient(circle, rgba(5,5,5,.88) 0%, rgba(5,5,5,.66) 58%, transparent 76%); content: ""; }
+.desktop-header-logo img { position: relative; width: 100%; height: 100%; object-fit: contain; }
 .mobile-menu-button {
   display: none;
   width: 42px;
@@ -219,20 +220,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .featured-carousel:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
 .featured-carousel-stage { position: absolute; inset: 0; overflow: hidden; background: #080808; }
 .featured-carousel-image { position: absolute; display: block; inset: 0; width: 100%; height: 100%; padding: 0; overflow: hidden; border: 0; background: transparent; cursor: zoom-in; }
-.featured-carousel-image img { position: absolute; top: 0; bottom: 0; left: 32%; width: 68%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 460ms ease; }
-.featured-carousel-image img.is-contained { top: 50%; bottom: auto; left: 63%; width: auto; max-width: 48%; height: auto; max-height: 100%; object-fit: contain; transform: translate(-50%, -50%); }
+.featured-carousel-image img { position: absolute; top: 0; bottom: 0; left: 34%; width: 62%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 460ms ease; }
+.featured-carousel-image img.is-contained { top: 52%; bottom: auto; left: 63%; width: auto; max-width: 46%; height: auto; max-height: 90%; object-fit: contain; object-position: center; transform: translate(-50%, -50%); }
 .featured-carousel-image img.is-active { opacity: 1; }
 .featured-carousel-shade { position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(90deg, #050505 0%, rgba(5,5,5,.96) 22%, rgba(5,5,5,.5) 43%, rgba(5,5,5,.04) 66%, rgba(5,5,5,.78) 100%); }
-.featured-carousel-copy { position: absolute; z-index: 3; top: 50%; left: max(48px, calc((100vw - 1120px) / 2)); width: min(430px, 34vw); transform: translateY(-50%); }
+.featured-carousel-copy { position: absolute; z-index: 3; top: 52%; left: max(48px, calc((100vw - 1120px) / 2)); width: min(430px, 34vw); transform: translateY(-50%); }
 .hero-kicker { margin-bottom: 6px; color: var(--gold-light); font-family: var(--font-serif); font-size: 1.25rem; font-style: italic; }
 .featured-carousel-copy h1 { margin-bottom: 16px; font-family: var(--font-serif); font-size: clamp(3.3rem, 4.3vw, 3.85rem); font-weight: 600; letter-spacing: -.035em; }
 .featured-carousel-copy > p:not(.hero-kicker) { margin-bottom: 24px; color: #cbc6bd; font-size: 1rem; line-height: 1.65; }
-.featured-carousel-credit { position: absolute; z-index: 3; top: 50%; right: max(54px, calc((100vw - 1120px) / 2)); display: flex; flex-direction: column; gap: 12px; align-items: flex-end; transform: translateY(-50%); text-align: right; }
+.featured-carousel-credit { position: absolute; z-index: 3; top: 52%; right: max(54px, calc((100vw - 1120px) / 2)); display: flex; flex-direction: column; gap: 12px; align-items: flex-end; transform: translateY(-50%); text-align: right; }
 .featured-carousel-credit > a:first-child { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; }
 .featured-carousel-credit > a:first-child:hover { color: var(--gold-light); }
 .featured-carousel-credit .text-link { font-size: .76rem; }
 .featured-carousel-arrow, .featured-carousel-toggle { position: absolute; z-index: 4; display: grid; padding: 0; place-items: center; border: 1px solid rgba(243,239,231,.3); background: rgba(5,5,5,.72); color: var(--white); cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
-.featured-carousel-arrow { top: 50%; width: 42px; height: 42px; transform: translateY(-50%); }
+.featured-carousel-arrow { top: 52%; width: 42px; height: 42px; transform: translateY(-50%); }
 .featured-carousel-prev { left: 16px; }
 .featured-carousel-next { right: 16px; }
 .featured-carousel-arrow:hover, .featured-carousel-toggle:hover { border-color: var(--gold-light); color: var(--gold-light); }
@@ -275,6 +276,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .artist-card-body { padding: 12px 13px 13px; }
 .artist-card h3 { margin-bottom: 5px; color: var(--gold-light); font-family: var(--font-serif); font-size: clamp(1.2rem, 1.7vw, 1.42rem); font-weight: 600; letter-spacing: -.015em; }
 .artist-card h3 a:hover { color: var(--gold-light); }
+.artist-card-specialty-slot { min-height: 32px; margin-bottom: 3px; }
+.artist-home-specialties { margin: 0; color: var(--gray); font-size: .68rem; line-height: 1.45; }
 .artist-card .text-link { border: 0; font-size: .73rem; }
 
 /* Portfolio and lightbox */
@@ -358,11 +361,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .artist-profile-image { overflow: hidden; max-width: 480px; aspect-ratio: .78; border: 1px solid var(--line-soft); }
 .artist-profile-image img { width: 100%; height: 100%; object-fit: cover; }
 .artist-profile-copy h1 { margin-bottom: 18px; font-size: clamp(3.1rem, 6vw, 4.7rem); }
-.profile-bio { max-width: 650px; margin-bottom: 22px; color: var(--gray); }
 .profile-meta { margin-bottom: 22px; padding-block: 15px; border-block: 1px solid var(--line-soft); }
 .profile-meta span { color: var(--gold-light); font-size: .78rem; font-weight: 700; }
-.profile-meta p { margin: 4px 0 0; color: var(--gray); }
+.profile-meta p { max-width: 680px; margin: 4px 0 0; color: var(--gray); font-size: .88rem; line-height: 1.65; }
 .artist-profile-copy > .text-link { margin-bottom: 22px; }
+.artist-about { padding-block: 56px 68px; border-top: 1px solid var(--line-soft); }
+.artist-about h2 { max-width: 780px; margin-bottom: 20px; font-family: var(--font-serif); font-size: clamp(2rem, 3.4vw, 2.75rem); font-weight: 600; }
+.artist-bio-copy { max-width: 780px; color: var(--gray); font-size: 1.04rem; line-height: 1.78; }
+.artist-bio-copy p { margin-bottom: 18px; }
+.artist-bio-copy p:last-child { margin-bottom: 0; }
 .about-overview { display: grid; grid-template-columns: 1fr 1fr .9fr; gap: 28px; }
 .about-overview article, .about-location { padding: 28px; border: 1px solid var(--line-soft); background: var(--raised); }
 .about-overview h2 { margin-bottom: 14px; font-size: clamp(1.55rem, 2.4vw, 2.05rem); }
@@ -447,7 +454,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .desktop-nav { gap: 112px; }
   .desktop-nav-side a { margin-inline: 3px; font-size: .75rem; }
   .desktop-nav-right { grid-template-columns: minmax(0, .62fr) minmax(150px, 1.38fr); }
-  .desktop-header-logo { width: 94px; height: 94px; }
+  .desktop-header-logo { width: 106px; height: 106px; }
   .featured-carousel-copy { left: 38px; width: min(400px, 39vw); }
   .featured-carousel-credit { right: 48px; }
   .featured-carousel-toggle { left: 38px; }
@@ -503,6 +510,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .artist-profile-hero { grid-template-columns: 1fr; gap: 38px; padding-block: 56px; }
   .artist-profile-image { max-width: 100%; }
   .artist-profile-copy h1 { font-size: 3rem; }
+  .artist-about { padding-block: 0 56px; border-top: 0; }
+  .artist-bio-copy { font-size: 1rem; line-height: 1.72; }
   .about-overview { grid-template-columns: 1fr; }
   .about-location { grid-column: auto; }
   .booking-layout { grid-template-columns: 1fr; }

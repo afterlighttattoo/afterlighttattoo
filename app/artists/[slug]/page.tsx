@@ -36,9 +36,8 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
         <div className="artist-profile-copy">
           <p className="eyebrow">After Light Tattoo</p>
           <h1>{artist.name}</h1>
-          {artist.bio && <p className="profile-bio">{artist.bio}</p>}
           {artist.specialties.length > 0 && (
-            <div className="profile-meta"><span>Specialties</span><p>{artist.specialties.join(" · ")}</p></div>
+            <div className="profile-meta"><span>Primary styles</span><p>{artist.specialties.join(" • ")}</p></div>
           )}
           {artist.socialLinks.instagram && (
             <a className="text-link" href={artist.socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${artist.name} on Instagram in a new tab`}>Instagram</a>
@@ -49,6 +48,16 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
           </div>
         </div>
       </section>
+
+      {artist.bio && (
+        <section className="artist-about section-shell" aria-labelledby="artist-about-heading">
+          <p className="eyebrow">About the artist</p>
+          <h2 id="artist-about-heading">About {artist.name.split(" ")[0]}.</h2>
+          <div className="artist-bio-copy">
+            {artist.bio.split("\n\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        </section>
+      )}
 
       <section className="featured-work section-block" id="portfolio" aria-labelledby="portfolio-heading">
         <div className="section-shell">
