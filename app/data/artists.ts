@@ -114,8 +114,16 @@ export const artists: Artist[] = [
       ["20260104_130214.jpg.jpeg", rob10, 450, 600], ["20260117_193829.jpg.jpeg", rob11, 450, 600], ["20260517_113825.jpg.jpeg", rob12, 1536, 2048],
       ["20260614_173305.jpg.jpeg", rob13, 450, 600], ["20260629_132754.jpg.jpeg", rob14, 450, 600],
     ]),
-    bio: null,
-    specialties: [],
+    bio: `My name is Rob Duncan. I was born in Jeannette, Pennsylvania, spent much of my childhood in Lancaster, and moved back to the area in 2006.
+
+I’ve been professionally tattooing since 2017, specializing in Neo-Traditional, American Traditional, and pop-culture-inspired tattoos. I especially enjoy creating pieces with bold lines, strong designs, and bright, vibrant color.
+
+After years of growing as an artist and building my career, I’m proud to begin the next chapter by opening After Light Tattoo. Creating a shop of my own has given me the opportunity to build a space centered around great artwork, creativity, and making every client feel comfortable and welcome.
+
+For me, tattooing is about more than putting artwork on skin. I love taking someone’s idea—whether it’s meaningful, nostalgic, weird, or completely original—and turning it into something they’re excited to wear for life.
+
+I’m always working to grow as an artist, push my creativity, and make every tattoo better than the last.`,
+    specialties: ["Neo-Traditional", "American Traditional", "Pop-Culture"],
     homepageSpecialties: [],
     socialLinks: { instagram: "" },
     bookingLink: "/booking?artist=rob-duncan",
