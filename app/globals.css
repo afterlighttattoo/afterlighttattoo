@@ -216,22 +216,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 /* Homepage */
 .home-hero { height: 500px; border-bottom: 1px solid var(--line); background: var(--black); }
-.home-hero-inner { display: grid; height: 100%; max-width: 1120px; grid-template-columns: minmax(340px, .82fr) minmax(0, 1.18fr); align-items: stretch; }
-.home-hero-copy { display: flex; position: relative; z-index: 2; padding-right: clamp(34px, 5vw, 72px); flex-direction: column; justify-content: center; }
-.home-hero-copy h1 { margin-bottom: 16px; font-family: var(--font-serif); font-size: clamp(3.3rem, 4.3vw, 3.85rem); font-weight: 600; letter-spacing: -.035em; }
-.home-hero-copy > p:not(.hero-kicker) { margin-bottom: 24px; color: #cbc6bd; font-size: 1rem; line-height: 1.65; }
-.home-hero-art { position: relative; overflow: hidden; height: 100%; margin: 0; background: var(--raised); }
-.home-hero-art::after { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(5,5,5,.56), transparent 32%, rgba(5,5,5,.12)); content: ""; }
-.home-hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.home-hero-art figcaption { position: absolute; z-index: 1; right: 18px; bottom: 15px; color: var(--gold-light); font-family: var(--font-serif); font-size: 1.22rem; font-weight: 600; text-shadow: 0 1px 12px var(--black); }
-.home-hero-art figcaption a:hover { color: var(--white); }
-.home-featured-work { width: 100%; border-bottom: 1px solid var(--line-soft); background: var(--raised); }
-.home-featured-work-inner { max-width: 1120px; padding-block: 48px 54px; }
-.home-section-heading { display: flex; margin-bottom: 20px; padding-bottom: 12px; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
-.home-section-heading h2 { font-family: var(--font-serif); font-size: clamp(2rem, 2.8vw, 2.3rem); font-weight: 600; }
-.home-section-heading .text-link { font-size: .78rem; }
-.home-featured-work .portfolio-grid { gap: 10px; }
-.home-featured-work .portfolio-overlay span::after { color: var(--gold-light); content: " →"; }
 .featured-carousel { position: relative; overflow: hidden; height: 100%; background: #070707; touch-action: pan-y; isolation: isolate; }
 .featured-carousel:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
 .featured-carousel-stage { position: absolute; z-index: 2; top: 0; bottom: 0; left: 43%; overflow: hidden; width: 46%; background: #080808; }
@@ -475,7 +459,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .desktop-nav-side a { margin-inline: 3px; font-size: .9rem; }
   .desktop-nav-right { grid-template-columns: minmax(0, .62fr) minmax(150px, 1.38fr); }
   .desktop-header-logo { width: 100px; height: 100px; }
-  .home-featured-work .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .featured-carousel-copy { left: 38px; width: min(400px, 39vw); }
   .featured-carousel-stage { left: 47%; width: 49%; }
   .featured-carousel-credit { right: calc(4% + 16px); }
@@ -500,15 +483,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .mobile-menu-button { display: inline-flex; }
   .brand-mark > img { width: 46px; height: 46px; }
   .home-hero { height: auto; }
-  .home-hero-inner { width: 100%; grid-template-columns: 1fr; }
-  .home-hero-copy { padding: 42px 16px 30px; }
-  .home-hero-copy h1 { font-size: clamp(2.8rem, 12vw, 3.45rem); }
-  .home-hero-copy > p:not(.hero-kicker) { margin-bottom: 20px; }
-  .home-hero-art { height: clamp(340px, 94vw, 410px); }
-  .home-hero-art::after { background: linear-gradient(0deg, rgba(5,5,5,.48), transparent 38%); }
-  .home-featured-work-inner { padding-block: 42px 48px; }
-  .home-section-heading { margin-bottom: 18px; }
-  .home-section-heading h2 { font-size: 2.1rem; }
   .featured-carousel { display: flex; height: auto; flex-direction: column; }
   .featured-carousel-stage { position: relative; top: auto; bottom: auto; left: auto; order: 2; width: 100%; height: clamp(360px, 100vw, 420px); }
   .featured-carousel-shade { display: none; }
