@@ -145,20 +145,22 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
                   key={`${image.artistSlug}-${image.filename}`}
                   aria-hidden={index !== activeIndex}
                 >
+                  {!image.homepagePrepared && (
+                    <Image
+                      className="artwork-backdrop"
+                      unoptimized
+                      src={image.src}
+                      alt=""
+                      width={image.width}
+                      height={image.height}
+                      loading="eager"
+                      draggable={false}
+                      sizes="(max-width: 760px) 100vw, 60vw"
+                      aria-hidden="true"
+                    />
+                  )}
                   <Image
-                    className="artwork-backdrop"
-                    unoptimized
-                    src={image.src}
-                    alt=""
-                    width={image.width}
-                    height={image.height}
-                    loading="eager"
-                    draggable={false}
-                    sizes="(max-width: 760px) 100vw, 60vw"
-                    aria-hidden="true"
-                  />
-                  <Image
-                    className="artwork-foreground"
+                    className={`artwork-foreground ${image.homepagePrepared ? "is-prepared" : ""}`.trim()}
                     unoptimized
                     src={image.src}
                     alt={index === activeIndex ? image.alt : ""}

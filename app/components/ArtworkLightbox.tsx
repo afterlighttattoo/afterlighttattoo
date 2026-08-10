@@ -21,6 +21,9 @@ export function ArtworkLightbox({ images, activeIndex, onChange, onClose, return
   const onChangeRef = useRef(onChange);
   const onCloseRef = useRef(onClose);
   const active = images[activeIndex];
+  const activeSrc = active.fullSrc ?? active.src;
+  const activeWidth = active.fullWidth ?? active.width;
+  const activeHeight = active.fullHeight ?? active.height;
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
@@ -88,7 +91,7 @@ export function ArtworkLightbox({ images, activeIndex, onChange, onClose, return
         </button>
       )}
       <figure>
-        <Image unoptimized src={active.src} alt={active.alt} width={active.width} height={active.height} sizes="100vw" />
+        <Image unoptimized src={activeSrc} alt={active.alt} width={activeWidth} height={activeHeight} sizes="100vw" />
         <figcaption>
           <Link href={`/artists/${active.artistSlug}`}>View {active.artistName}</Link>
           <small>{activeIndex + 1} / {images.length}</small>

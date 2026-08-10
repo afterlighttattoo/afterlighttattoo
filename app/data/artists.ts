@@ -52,12 +52,16 @@ import aly10 from "@/images/aly-wisler/new-artwork/f90a58c8-7448-4720-9968-86a09
 
 export type PortfolioImage = {
   src: string;
+  fullSrc?: string;
   width: number;
   height: number;
+  fullWidth?: number;
+  fullHeight?: number;
   alt: string;
   artistName: string;
   artistSlug: string;
   filename: string;
+  homepagePrepared?: boolean;
 };
 
 export type ImageAsset = {
@@ -212,13 +216,45 @@ From black and gray micro-realism to bright, bold neo-traditional pieces, I love
 
 export const allArtwork = artists.flatMap((artist) => artist.portfolioImages);
 
+const joshHomepageSlideshowSources: Record<string, string> = {
+  "Screenshot_20260720_195524_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195524_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195527_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195527_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195530_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195530_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195534_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195534_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195538_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195538_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195541_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195541_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195545_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195545_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195548_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195548_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195551_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195551_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195554_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195554_Messages.jpg-slideshow.webp",
+  "Screenshot_20260720_195557_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195557_Messages.jpg-slideshow.webp",
+};
+
+function homepageSlideshowImage(image: PortfolioImage): PortfolioImage {
+  if (image.artistSlug !== "josh-mann") return image;
+
+  const slideshowSrc = joshHomepageSlideshowSources[image.filename];
+  if (!slideshowSrc) return image;
+
+  return {
+    ...image,
+    src: slideshowSrc,
+    fullSrc: image.src,
+    width: 1800,
+    height: 1200,
+    fullWidth: image.width,
+    fullHeight: image.height,
+    homepagePrepared: true,
+  };
+}
+
 const longestPortfolio = Math.max(...artists.map((artist) => artist.portfolioImages.length));
 
 const slideshowPortfolios = artists.map((artist) =>
   artist.portfolioImages
     .map((image, originalIndex) => ({ image, originalIndex }))
     .sort((a, b) => (b.image.width * b.image.height) - (a.image.width * a.image.height) || a.originalIndex - b.originalIndex)
-    .map(({ image }) => image),
+    .map(({ image }) => homepageSlideshowImage(image)),
 );
 
 export const carouselArtwork = Array.from({ length: longestPortfolio }, (_, imageIndex) =>
