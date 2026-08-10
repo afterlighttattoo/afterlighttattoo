@@ -2,19 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { PortfolioImage } from "@/app/data/artists";
 import { ArtworkLightbox } from "./ArtworkLightbox";
 
 function isPreloaded(index: number, activeIndex: number, length: number) {
   return index === activeIndex || index === (activeIndex - 1 + length) % length || index === (activeIndex + 1) % length;
-}
-
-function needsContainedPresentation(image: PortfolioImage) {
-  const aspectRatio = image.width / image.height;
-
-  return aspectRatio < 1.2 || image.width < 900 || image.height < 700;
 }
 
 export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }) {
@@ -29,6 +23,7 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
   const pointerStartXRef = useRef<number | null>(null);
   const ignoreClickRef = useRef(false);
   const imageButtonRef = useRef<HTMLButtonElement>(null);
+  const fullscreenButtonRef = useRef<HTMLButtonElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -63,13 +58,13 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
     setAnnouncement(`Showing artwork ${nextIndex + 1} of ${images.length} by ${images[nextIndex].artistName}.`);
   };
 
-  const openLightbox = () => {
+  const openLightbox = (returnTarget: HTMLElement | null) => {
     if (ignoreClickRef.current) {
       ignoreClickRef.current = false;
       return;
     }
     setUserPaused(true);
-    returnFocusRef.current = imageButtonRef.current;
+    returnFocusRef.current = returnTarget;
     setLightboxIndex(activeIndex);
   };
 
@@ -98,60 +93,6 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
           }
         }}
       >
-        <div className="featured-carousel-stage">
-          <button
-            ref={imageButtonRef}
-            className="featured-carousel-image"
-            type="button"
-            onClick={openLightbox}
-            onPointerDown={(event) => { pointerStartXRef.current = event.clientX; }}
-            onPointerUp={(event) => {
-              if (pointerStartXRef.current === null) return;
-              const delta = event.clientX - pointerStartXRef.current;
-              pointerStartXRef.current = null;
-              if (Math.abs(delta) < 45) return;
-              ignoreClickRef.current = true;
-              selectSlide(delta > 0 ? activeIndex - 1 : activeIndex + 1);
-            }}
-            onPointerCancel={() => { pointerStartXRef.current = null; }}
-            aria-label={`Open full image: ${active.alt}`}
-          >
-            {images.map((image, index) => isPreloaded(index, activeIndex, images.length) ? (
-              <span
-                className={`featured-carousel-slide ${index === activeIndex ? "is-active" : ""} ${needsContainedPresentation(image) ? "is-contained" : ""}`.trim()}
-                key={`${image.artistSlug}-${image.filename}`}
-                aria-hidden={index !== activeIndex}
-              >
-                <Image
-                  className="artwork-backdrop"
-                  unoptimized
-                  src={image.src}
-                  alt=""
-                  width={image.width}
-                  height={image.height}
-                  loading="eager"
-                  draggable={false}
-                  sizes="(max-width: 760px) 100vw, 50vw"
-                  aria-hidden="true"
-                />
-                <Image
-                  className="artwork-foreground"
-                  unoptimized
-                  src={image.src}
-                  alt={index === activeIndex ? image.alt : ""}
-                  width={image.width}
-                  height={image.height}
-                  loading="eager"
-                  draggable={false}
-                  sizes="(max-width: 760px) 90vw, 46vw"
-                />
-              </span>
-            ) : null)}
-          </button>
-        </div>
-
-        <div className="featured-carousel-shade" aria-hidden="true" />
-
         <div className="featured-carousel-copy">
           <p className="hero-kicker">Custom artwork.</p>
           <h1 id="hero-title">Made permanent.</h1>
@@ -162,28 +103,98 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
           </div>
         </div>
 
-        <div className="featured-carousel-credit">
-          <Link href={`/artists/${active.artistSlug}`}>{active.artistName}</Link>
-          <Link className="text-link" href="/gallery">View Full Gallery <span aria-hidden="true">→</span></Link>
+        <div className="featured-carousel-gallery">
+          <div className="featured-carousel-gallery-top">
+            <Link className="text-link" href="/gallery">View Full Gallery <span aria-hidden="true">→</span></Link>
+            <button
+              ref={fullscreenButtonRef}
+              className="featured-carousel-fullscreen"
+              type="button"
+              onClick={() => openLightbox(fullscreenButtonRef.current)}
+              aria-label={`Open full image: ${active.alt}`}
+            >
+              <Maximize2 aria-hidden="true" size={17} />
+            </button>
+          </div>
+
+          <div className="featured-carousel-stage">
+            <button
+              ref={imageButtonRef}
+              className="featured-carousel-image"
+              type="button"
+              onClick={() => openLightbox(imageButtonRef.current)}
+              onPointerDown={(event) => { pointerStartXRef.current = event.clientX; }}
+              onPointerUp={(event) => {
+                if (pointerStartXRef.current === null) return;
+                const delta = event.clientX - pointerStartXRef.current;
+                pointerStartXRef.current = null;
+                if (Math.abs(delta) < 45) return;
+                ignoreClickRef.current = true;
+                selectSlide(delta > 0 ? activeIndex - 1 : activeIndex + 1);
+              }}
+              onPointerCancel={() => { pointerStartXRef.current = null; }}
+              aria-label={`Open full image: ${active.alt}`}
+            >
+              {images.map((image, index) => isPreloaded(index, activeIndex, images.length) ? (
+                <span
+                  className={`featured-carousel-slide ${index === activeIndex ? "is-active" : ""}`.trim()}
+                  key={`${image.artistSlug}-${image.filename}`}
+                  aria-hidden={index !== activeIndex}
+                >
+                  <Image
+                    className="artwork-backdrop"
+                    unoptimized
+                    src={image.src}
+                    alt=""
+                    width={image.width}
+                    height={image.height}
+                    loading="eager"
+                    draggable={false}
+                    sizes="(max-width: 760px) 100vw, 60vw"
+                    aria-hidden="true"
+                  />
+                  <Image
+                    className="artwork-foreground"
+                    unoptimized
+                    src={image.src}
+                    alt={index === activeIndex ? image.alt : ""}
+                    width={image.width}
+                    height={image.height}
+                    loading="eager"
+                    draggable={false}
+                    sizes="(max-width: 760px) 100vw, 60vw"
+                  />
+                </span>
+              ) : null)}
+            </button>
+          </div>
+
+          <div className="featured-carousel-bar">
+            <div className="featured-carousel-credit">
+              <span>Tattoo by</span>
+              <Link href={`/artists/${active.artistSlug}`}>{active.artistName}</Link>
+            </div>
+            <div className="featured-carousel-controls">
+              <button
+                className="featured-carousel-toggle"
+                type="button"
+                onClick={() => setUserPaused((paused) => !paused)}
+                aria-label={userPaused ? "Play artwork slideshow" : "Pause artwork slideshow"}
+                aria-pressed={userPaused}
+              >
+                {userPaused ? <Play aria-hidden="true" size={15} /> : <Pause aria-hidden="true" size={15} />}
+              </button>
+              <span className="featured-carousel-count" aria-hidden="true">{activeIndex + 1} / {images.length}</span>
+              <button className="featured-carousel-arrow" type="button" onClick={() => selectSlide(activeIndex - 1)} aria-label="Show previous artwork">
+                <ChevronLeft aria-hidden="true" size={22} />
+              </button>
+              <button className="featured-carousel-arrow" type="button" onClick={() => selectSlide(activeIndex + 1)} aria-label="Show next artwork">
+                <ChevronRight aria-hidden="true" size={22} />
+              </button>
+            </div>
+          </div>
         </div>
 
-        <button className="featured-carousel-arrow featured-carousel-prev" type="button" onClick={() => selectSlide(activeIndex - 1)} aria-label="Show previous artwork">
-          <ChevronLeft aria-hidden="true" size={25} />
-        </button>
-        <button className="featured-carousel-arrow featured-carousel-next" type="button" onClick={() => selectSlide(activeIndex + 1)} aria-label="Show next artwork">
-          <ChevronRight aria-hidden="true" size={25} />
-        </button>
-
-        <button
-          className="featured-carousel-toggle"
-          type="button"
-          onClick={() => setUserPaused((paused) => !paused)}
-          aria-label={userPaused ? "Play artwork slideshow" : "Pause artwork slideshow"}
-          aria-pressed={userPaused}
-        >
-          {userPaused ? <Play aria-hidden="true" size={16} /> : <Pause aria-hidden="true" size={16} />}
-        </button>
-        <span className="featured-carousel-count" aria-hidden="true">{activeIndex + 1} / {images.length}</span>
         <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
       </div>
 
