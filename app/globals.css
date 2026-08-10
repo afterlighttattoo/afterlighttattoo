@@ -222,6 +222,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .hero-kicker { margin-bottom: 6px; color: var(--gold-light); font-family: var(--font-serif); font-size: 1.25rem; font-style: italic; }
 .featured-carousel-copy h1 { margin-bottom: 16px; font-family: var(--font-serif); font-size: clamp(3.3rem, 4.3vw, 3.85rem); font-weight: 600; letter-spacing: -.035em; }
 .featured-carousel-copy > p:not(.hero-kicker) { margin-bottom: 24px; color: #cbc6bd; font-size: 1rem; line-height: 1.65; }
+.hero-meaning { max-width: 34ch; margin-top: 28px; }
+.hero-meaning-label { margin-bottom: 8px; color: var(--gold); font-size: .65rem; font-weight: 700; letter-spacing: .13em; line-height: 1.4; text-transform: uppercase; }
+.hero-meaning-copy { margin: 0; color: var(--gray); font-size: .86rem; line-height: 1.62; }
 .featured-carousel-gallery { display: grid; overflow: hidden; width: 100%; height: clamp(500px, 38vw, 540px); grid-template-rows: 44px minmax(0, 1fr) 68px; border: 1px solid var(--line); background: var(--black); }
 .featured-carousel-gallery-top { display: flex; padding: 0 10px 0 14px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line-soft); background: #080808; }
 .featured-carousel-gallery-top .text-link { font-size: .72rem; }
@@ -495,6 +498,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .featured-carousel-copy { width: 100%; padding: 42px 16px 30px; }
   .featured-carousel-copy h1 { font-size: clamp(2.8rem, 12vw, 3.45rem); }
   .featured-carousel-copy > p:not(.hero-kicker) { margin-bottom: 20px; }
+  .hero-meaning { max-width: 38rem; margin-top: 26px; }
+  .hero-meaning-copy { font-size: .9rem; line-height: 1.65; }
   .featured-carousel-gallery { width: 100%; height: clamp(440px, 126vw, 500px); grid-template-rows: 44px minmax(0, 1fr) 70px; }
   .featured-carousel-bar { padding-inline: 10px; }
   .featured-carousel-credit > a { max-width: 116px; font-size: 1.06rem; }

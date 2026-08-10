@@ -101,6 +101,10 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
             <Link className="button button-gold" href="/booking">Book a Consultation</Link>
             <Link className="text-link" href="/artists">View Artists <span aria-hidden="true">→</span></Link>
           </div>
+          <div className="hero-meaning">
+            <p className="hero-meaning-label">The meaning behind After Light</p>
+            <p className="hero-meaning-copy">After Light represents what we carry with us after a moment has passed—the memories, experiences, growth, and stories that become part of who we are. Tattoos give those stories a permanent place to live.</p>
+          </div>
         </div>
 
         <div className="featured-carousel-gallery">
