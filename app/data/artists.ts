@@ -204,6 +204,15 @@ From black and gray micro-realism to bright, bold neo-traditional pieces, I love
 
 export const allArtwork = artists.flatMap((artist) => artist.portfolioImages);
 
+export const homepageFeaturedArtwork = [
+  artists[0].portfolioImages[11],
+  artists[1].portfolioImages[2],
+  artists[2].portfolioImages[4],
+  artists[3].portfolioImages[0],
+  artists[1].portfolioImages[3],
+  artists[3].portfolioImages[6],
+];
+
 const longestPortfolio = Math.max(...artists.map((artist) => artist.portfolioImages.length));
 
 const slideshowPortfolios = artists.map((artist) =>
