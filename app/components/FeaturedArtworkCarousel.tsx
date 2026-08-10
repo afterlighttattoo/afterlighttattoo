@@ -11,6 +11,11 @@ function isPreloaded(index: number, activeIndex: number, length: number) {
   return index === activeIndex || index === (activeIndex - 1 + length) % length || index === (activeIndex + 1) % length;
 }
 
+function shouldContainArtwork(image: PortfolioImage) {
+  const ratio = image.width / image.height;
+  return ratio < 0.38 || ratio > 2.5;
+}
+
 export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -137,7 +142,7 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
             >
               {images.map((image, index) => isPreloaded(index, activeIndex, images.length) ? (
                 <span
-                  className={`featured-carousel-slide ${index === activeIndex ? "is-active" : ""}`.trim()}
+                  className={`featured-carousel-slide ${index === activeIndex ? "is-active" : ""} ${shouldContainArtwork(image) ? "is-contained" : ""}`.trim()}
                   key={`${image.artistSlug}-${image.filename}`}
                   aria-hidden={index !== activeIndex}
                 >
