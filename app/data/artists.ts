@@ -124,7 +124,7 @@ For me, tattooing is about more than putting artwork on skin. I love taking some
 
 I’m always working to grow as an artist, push my creativity, and make every tattoo better than the last.`,
     specialties: ["Neo-Traditional", "American Traditional", "Pop-Culture"],
-    homepageSpecialties: [],
+    homepageSpecialties: ["Neo-Traditional", "American Traditional", "Pop-Culture"],
     socialLinks: { instagram: "" },
     bookingLink: "/booking?artist=rob-duncan",
   },
