@@ -94,6 +94,15 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
         }}
       >
         <div className="featured-carousel-copy">
+          <Image
+            className="mobile-hero-logo"
+            unoptimized
+            src="/images/branding/after-light-tattoo-logo.png"
+            alt="After Light Tattoo"
+            width={600}
+            height={600}
+            sizes="(max-width: 760px) 160px, 1px"
+          />
           <p className="hero-kicker">Custom artwork.</p>
           <h1 id="hero-title">Made permanent.</h1>
           <p>Thoughtful designs. Expert craftsmanship.<br />Made after the light.</p>

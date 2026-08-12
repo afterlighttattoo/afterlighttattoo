@@ -1,54 +1,8 @@
 import type { StaticImageData } from "next/image";
 
-import rob01 from "@/images/rob-duncan/artwork/10484.jpg.jpeg";
-import rob02 from "@/images/rob-duncan/artwork/20250921_155116.jpg.jpeg";
-import rob03 from "@/images/rob-duncan/artwork/20251023_150239.jpg.jpeg";
-import rob04 from "@/images/rob-duncan/artwork/20251025_194354.jpg.jpeg";
-import rob05 from "@/images/rob-duncan/artwork/20251026_184209.jpg.jpeg";
-import rob06 from "@/images/rob-duncan/artwork/20251110_180942.jpg.jpeg";
-import rob07 from "@/images/rob-duncan/artwork/20251122_210948.jpg.jpeg";
-import rob08 from "@/images/rob-duncan/artwork/20251123_172212.jpg.jpeg";
-import rob09 from "@/images/rob-duncan/artwork/20251204_152424.jpg.jpeg";
-import rob10 from "@/images/rob-duncan/artwork/20260104_130214.jpg.jpeg";
-import rob11 from "@/images/rob-duncan/artwork/20260117_193829.jpg.jpeg";
-import rob12 from "@/images/rob-duncan/artwork/20260517_113825.jpg.jpeg";
-import rob13 from "@/images/rob-duncan/artwork/20260614_173305.jpg.jpeg";
-import rob14 from "@/images/rob-duncan/artwork/20260629_132754.jpg.jpeg";
-
 import joshProfile from "@/images/josh-mann/josh-mann.jpeg";
-import josh01 from "@/images/josh-mann/artwork/Screenshot_20260720_195524_Messages.jpg.jpeg";
-import josh02 from "@/images/josh-mann/artwork/Screenshot_20260720_195527_Messages.jpg.jpeg";
-import josh03 from "@/images/josh-mann/artwork/Screenshot_20260720_195530_Messages.jpg.jpeg";
-import josh04 from "@/images/josh-mann/artwork/Screenshot_20260720_195534_Messages.jpg.jpeg";
-import josh05 from "@/images/josh-mann/artwork/Screenshot_20260720_195538_Messages.jpg.jpeg";
-import josh06 from "@/images/josh-mann/artwork/Screenshot_20260720_195541_Messages.jpg.jpeg";
-import josh07 from "@/images/josh-mann/artwork/Screenshot_20260720_195545_Messages.jpg.jpeg";
-import josh08 from "@/images/josh-mann/artwork/Screenshot_20260720_195548_Messages.jpg.jpeg";
-import josh09 from "@/images/josh-mann/artwork/Screenshot_20260720_195551_Messages.jpg.jpeg";
-import josh10 from "@/images/josh-mann/artwork/Screenshot_20260720_195554_Messages.jpg.jpeg";
-import josh11 from "@/images/josh-mann/artwork/Screenshot_20260720_195557_Messages.jpg.jpeg";
-
 import amandaProfile from "@/images/amanda-simonich/amanda.jpeg";
-import amanda01 from "@/images/amanda-simonich/artwork/IMG_20260720_202040.jpg.jpeg";
-import amanda02 from "@/images/amanda-simonich/artwork/IMG_20260720_202049.jpg.jpeg";
-import amanda03 from "@/images/amanda-simonich/artwork/IMG_20260720_202051.jpg.jpeg";
-import amanda04 from "@/images/amanda-simonich/artwork/IMG_20260720_202056.jpg.jpeg";
-import amanda05 from "@/images/amanda-simonich/artwork/Screenshot_20260720_202259_Messages.jpg.jpeg";
-import amanda06 from "@/images/amanda-simonich/artwork/Screenshot_20260720_202301_Messages.jpg.jpeg";
-import amanda07 from "@/images/amanda-simonich/artwork/Screenshot_20260720_202304_Messages.jpg.jpeg";
-import amanda08 from "@/images/amanda-simonich/artwork/Screenshot_20260720_202306_Messages.jpg.jpeg";
-
 import alyProfile from "@/images/aly-wisler/aly.jpeg";
-import aly01 from "@/images/aly-wisler/new-artwork/095b9bfb-523f-4507-8424-2f172c41a78d.jpg";
-import aly02 from "@/images/aly-wisler/new-artwork/17cb1cab-4e8f-4539-a31e-d8a061f9bf6b.jpg";
-import aly03 from "@/images/aly-wisler/new-artwork/24e043cf-a774-442c-a441-7cf429189dd6.jpg";
-import aly04 from "@/images/aly-wisler/new-artwork/29219d62-ce5f-46dd-9b86-42144b8f3473.jpg";
-import aly05 from "@/images/aly-wisler/new-artwork/5a89e3f6-7b82-47a8-9910-a28ae04fff99.jpg";
-import aly06 from "@/images/aly-wisler/new-artwork/8f798ba7-42a6-445b-b7e5-d5012f474eda.jpg";
-import aly07 from "@/images/aly-wisler/new-artwork/935b0b96-66e1-4344-b9f4-ae21de34cc5c.jpg";
-import aly08 from "@/images/aly-wisler/new-artwork/ab511802-8424-4688-9e62-966d30da4131.jpg";
-import aly09 from "@/images/aly-wisler/new-artwork/cfc95ae4-60c8-4830-b963-7f33f7922638.jpg";
-import aly10 from "@/images/aly-wisler/new-artwork/f90a58c8-7448-4720-9968-86a0964d211e.jpg";
 
 export type PortfolioImage = {
   src: string;
@@ -92,9 +46,9 @@ function imageAsset(image: StaticImageData | string, width: number, height: numb
   return { src: source(image), width, height };
 }
 
-function portfolio(artistName: string, artistSlug: string, files: Array<[string, StaticImageData | string, number, number]>): PortfolioImage[] {
-  return files.map(([filename, image, width, height], index) => ({
-    src: source(image),
+function portfolio(artistName: string, artistSlug: string, artworkDirectory: string, files: Array<[string, number, number]>): PortfolioImage[] {
+  return files.map(([filename, width, height], index) => ({
+    src: `${artworkDirectory}/${filename}`,
     width,
     height,
     alt: `Custom tattoo by ${artistName}, portfolio image ${index + 1}`,
@@ -110,13 +64,21 @@ export const artists: Artist[] = [
     slug: "rob-duncan",
     profileImage: { src: "/images/rob-duncan/rob.png", width: 350, height: 543 },
     profileAlt: "Rob Duncan tattooing a client",
-    artworkDirectory: "/images/rob-duncan/artwork",
-    portfolioImages: portfolio("Rob Duncan", "rob-duncan", [
-      ["10484.jpg.jpeg", rob01, 450, 600], ["20250921_155116.jpg.jpeg", rob02, 450, 600], ["20251023_150239.jpg.jpeg", rob03, 450, 600],
-      ["20251025_194354.jpg.jpeg", rob04, 450, 600], ["20251026_184209.jpg.jpeg", rob05, 450, 600], ["20251110_180942.jpg.jpeg", rob06, 450, 600],
-      ["20251122_210948.jpg.jpeg", rob07, 450, 600], ["20251123_172212.jpg.jpeg", rob08, 450, 600], ["20251204_152424.jpg.jpeg", rob09, 450, 600],
-      ["20260104_130214.jpg.jpeg", rob10, 450, 600], ["20260117_193829.jpg.jpeg", rob11, 450, 600], ["20260517_113825.jpg.jpeg", rob12, 1536, 2048],
-      ["20260614_173305.jpg.jpeg", rob13, 450, 600], ["20260629_132754.jpg.jpeg", rob14, 450, 600],
+    artworkDirectory: "/images/rob-duncan/new-artwork",
+    portfolioImages: portfolio("Rob Duncan", "rob-duncan", "/images/rob-duncan/new-artwork", [
+      ["rob-1.jpg", 1536, 2048], ["rob-2.jpg", 1536, 2048], ["rob-3.jpg", 1536, 2048],
+      ["rob-5.jpg", 1536, 2048], ["rob-6.jpg", 1536, 2048], ["rob-7.jpg", 1536, 2048],
+      ["rob-8.jpg", 1536, 2048], ["rob-9.jpg", 1536, 2048], ["rob-10.jpg", 1536, 2048],
+      ["rob-11.jpg", 1536, 2048], ["rob-12.jpg", 1536, 2048], ["rob-13.jpg", 1536, 2048],
+      ["rob-14.jpg", 1536, 2048], ["rob-15.jpg", 1536, 2048], ["rob-16.jpg", 1536, 2048],
+      ["rob-17.jpg", 1536, 2048], ["rob-18.jpg", 1536, 2048], ["rob-19.jpg", 1536, 2048],
+      ["rob-20.jpg", 1536, 2048], ["rob-21.jpg", 1536, 2048], ["rob-22.jpg", 1536, 2048],
+      ["rob-23.jpg", 1536, 2048], ["rob-24.jpg", 1536, 2048], ["rob-25.jpg", 1536, 2048],
+      ["rob-26.jpg", 1536, 2048], ["rob-27.jpg", 1536, 2048], ["rob-28.jpg", 1536, 2048],
+      ["rob-29.jpg", 1536, 2048], ["rob-30.jpg", 1536, 2048], ["rob-31.jpg", 1536, 2048],
+      ["rob-32.jpg", 1536, 2048], ["rob-33.jpg", 1536, 2048], ["rob-34.jpg", 1536, 2048],
+      ["rob-35.jpg", 736, 1000], ["rob-36.jpg", 736, 1000], ["rob-37.jpg", 736, 1000],
+      ["rob-38.jpg", 1536, 2048], ["ron-4.jpg", 1536, 2048],
     ]),
     bio: `My name is Rob Duncan. I was born in Jeannette, Pennsylvania, spent much of my childhood in Lancaster, and moved back to the area in 2006.
 
@@ -137,14 +99,15 @@ I’m always working to grow as an artist, push my creativity, and make every ta
     slug: "josh-mann",
     profileImage: imageAsset(joshProfile, 277, 600),
     profileAlt: "Josh Mann tattooing a client",
-    artworkDirectory: "/images/josh-mann/artwork",
-    portfolioImages: portfolio("Josh Mann", "josh-mann", [
-      ["Screenshot_20260720_195524_Messages.jpg.jpeg", josh01, 277, 600], ["Screenshot_20260720_195527_Messages.jpg.jpeg", josh02, 277, 600],
-      ["Screenshot_20260720_195530_Messages.jpg.jpeg", josh03, 945, 2048], ["Screenshot_20260720_195534_Messages.jpg.jpeg", josh04, 945, 2048],
-      ["Screenshot_20260720_195538_Messages.jpg.jpeg", josh05, 277, 600], ["Screenshot_20260720_195541_Messages.jpg.jpeg", josh06, 277, 600],
-      ["Screenshot_20260720_195545_Messages.jpg.jpeg", josh07, 277, 600], ["Screenshot_20260720_195548_Messages.jpg.jpeg", josh08, 277, 600],
-      ["Screenshot_20260720_195551_Messages.jpg.jpeg", josh09, 277, 600], ["Screenshot_20260720_195554_Messages.jpg.jpeg", josh10, 277, 600],
-      ["Screenshot_20260720_195557_Messages.jpg.jpeg", josh11, 945, 2048],
+    artworkDirectory: "/images/josh-mann/new-artwork",
+    portfolioImages: portfolio("Josh Mann", "josh-mann", "/images/josh-mann/new-artwork", [
+      ["jm-1.jpg", 1536, 2048], ["jm-2.jpg", 1536, 2048], ["jm-3.jpg", 1536, 2048],
+      ["jm-4.jpg", 1536, 2048], ["jm-5.jpg", 1536, 2048], ["jm-6.jpg", 1536, 2048],
+      ["jm-7.jpg", 736, 1000], ["jm-8.jpg", 1179, 1572], ["jm-9.jpg", 1536, 2048],
+      ["jm-10.jpg", 1536, 2048], ["jm-11.jpg", 1536, 2048], ["jm-12.jpg", 1536, 2048],
+      ["jm-13.jpg", 1536, 2048], ["jm-14.jpg", 1536, 2048], ["jm-15.jpg", 1536, 2048],
+      ["jm-16.jpg", 1536, 2048], ["jm-17.jpg", 1536, 2048], ["jm-19.jpg", 639, 892],
+      ["jm-20.jpg", 1536, 2048], ["jm-21.jpg", 2048, 1365],
     ]),
     bio: `Art has been a part of my life for as long as I can remember. I grew up in a household with a father who was an incredible artist and well known locally for his work. Watching him create had a huge influence on me, and from a young age, I was always drawing, coloring, and filling pages—and sometimes walls—with color.
 
@@ -167,12 +130,19 @@ Whether I’m working on skin, paper, or a large-scale piece of artwork, my goal
     slug: "amanda-simonich",
     profileImage: imageAsset(amandaProfile, 401, 600),
     profileAlt: "Amanda Simonich tattooing a client",
-    artworkDirectory: "/images/amanda-simonich/artwork",
-    portfolioImages: portfolio("Amanda Simonich", "amanda-simonich", [
-      ["IMG_20260720_202040.jpg.jpeg", amanda01, 599, 600], ["IMG_20260720_202049.jpg.jpeg", amanda02, 600, 593],
-      ["IMG_20260720_202051.jpg.jpeg", amanda03, 482, 600], ["IMG_20260720_202056.jpg.jpeg", amanda04, 600, 595],
-      ["Screenshot_20260720_202259_Messages.jpg.jpeg", amanda05, 945, 2048], ["Screenshot_20260720_202301_Messages.jpg.jpeg", amanda06, 277, 600],
-      ["Screenshot_20260720_202304_Messages.jpg.jpeg", amanda07, 277, 600], ["Screenshot_20260720_202306_Messages.jpg.jpeg", amanda08, 277, 600],
+    artworkDirectory: "/images/amanda-simonich/new-artwork",
+    portfolioImages: portfolio("Amanda Simonich", "amanda-simonich", "/images/amanda-simonich/new-artwork", [
+      ["am-1.jpg", 1440, 1440], ["am-2.jpg", 1440, 1796], ["am-3.jpg", 1440, 1440],
+      ["am-4.jpg", 1440, 1444], ["am-5.jpg", 1440, 1440], ["am-6.jpg", 982, 982],
+      ["am-7.jpg", 956, 956], ["am-8.jpg", 1028, 1028], ["am-9.jpg", 1179, 1165],
+      ["am-10.jpg", 1990, 2048], ["am-11.jpg", 1040, 1065], ["am-12.jpg", 1930, 2048],
+      ["am-13.jpg", 1179, 1140], ["am-14.jpg", 1440, 1641], ["am-15.jpg", 1178, 1171],
+      ["am-16.jpg", 1440, 1440], ["am-17.jpg", 1440, 1453], ["am-18.jpg", 1440, 1800],
+      ["am-19.jpg", 1440, 1602], ["am-20.jpg", 1440, 1539], ["am-21.jpg", 1440, 1511],
+      ["am-22.jpg", 1440, 1440], ["am-23.jpg", 1385, 1385], ["am-24.jpg", 1293, 1293],
+      ["am-25.jpg", 1440, 1440], ["am-26.jpg", 1366, 1366], ["am-27.jpg", 852, 852],
+      ["am-28.jpg", 1234, 1234], ["am-29.jpg", 1440, 1440], ["am-30.jpg", 1291, 1291],
+      ["am-31.jpg", 1491, 1491], ["am-32.jpg", 1440, 1440],
     ]),
     bio: `I have eight years of experience tattooing in Pittsburgh and the surrounding areas. I specialize primarily in black and gray realism, illustrative, floral, geometric, and fine-line tattoos.
 
@@ -187,18 +157,21 @@ My goal is to work with every client throughout the creative process to design a
     slug: "aly-wisler",
     profileImage: imageAsset(alyProfile, 640, 640),
     profileAlt: "Portrait of tattoo artist Aly Wisler",
-    artworkDirectory: "/images/aly-wisler/new-artwork",
-    portfolioImages: portfolio("Aly Wisler", "aly-wisler", [
-      ["095b9bfb-523f-4507-8424-2f172c41a78d.jpg", aly01, 1536, 2048],
-      ["17cb1cab-4e8f-4539-a31e-d8a061f9bf6b.jpg", aly02, 1536, 2048],
-      ["24e043cf-a774-442c-a441-7cf429189dd6.jpg", aly03, 1536, 2048],
-      ["29219d62-ce5f-46dd-9b86-42144b8f3473.jpg", aly04, 1536, 2048],
-      ["5a89e3f6-7b82-47a8-9910-a28ae04fff99.jpg", aly05, 1536, 2048],
-      ["8f798ba7-42a6-445b-b7e5-d5012f474eda.jpg", aly06, 1536, 2048],
-      ["935b0b96-66e1-4344-b9f4-ae21de34cc5c.jpg", aly07, 2048, 1310],
-      ["ab511802-8424-4688-9e62-966d30da4131.jpg", aly08, 1536, 2048],
-      ["cfc95ae4-60c8-4830-b963-7f33f7922638.jpg", aly09, 1536, 2048],
-      ["f90a58c8-7448-4720-9968-86a0964d211e.jpg", aly10, 1536, 2048],
+    artworkDirectory: "/images/aly-wisler/new-artwork2",
+    portfolioImages: portfolio("Aly Wisler", "aly-wisler", "/images/aly-wisler/new-artwork2", [
+      ["095b9bfb-523f-4507-8424-2f172c41a78d.jpg", 1536, 2048],
+      ["17cb1cab-4e8f-4539-a31e-d8a061f9bf6b.jpg", 1536, 2048],
+      ["24e043cf-a774-442c-a441-7cf429189dd6.jpg", 1536, 2048],
+      ["29219d62-ce5f-46dd-9b86-42144b8f3473.jpg", 1536, 2048],
+      ["5a89e3f6-7b82-47a8-9910-a28ae04fff99.jpg", 1536, 2048],
+      ["8f798ba7-42a6-445b-b7e5-d5012f474eda.jpg", 1536, 2048],
+      ["935b0b96-66e1-4344-b9f4-ae21de34cc5c.jpg", 2048, 1310],
+      ["ab511802-8424-4688-9e62-966d30da4131.jpg", 1536, 2048],
+      ["aly-2.jpg", 1440, 1457], ["aly-4.jpg", 1440, 1618], ["aly-5.jpg", 1440, 1513],
+      ["aly-6.jpg", 1440, 1538], ["aly-7.jpg", 1440, 1534], ["aly-8.jpg", 1440, 1440],
+      ["aly-9.jpg", 1440, 1501], ["aly-11.jpg", 1536, 2048],
+      ["cfc95ae4-60c8-4830-b963-7f33f7922638.jpg", 1536, 2048],
+      ["f90a58c8-7448-4720-9968-86a0964d211e.jpg", 1536, 2048],
     ]),
     bio: `Hello! My name is Aly, and I’ve been tattooing for about five years. I began my tattoo journey in Brookline, learning under Gregory Tepper, and completed my apprenticeship in a little over a year.
 
@@ -216,45 +189,13 @@ From black and gray micro-realism to bright, bold neo-traditional pieces, I love
 
 export const allArtwork = artists.flatMap((artist) => artist.portfolioImages);
 
-const joshHomepageSlideshowSources: Record<string, string> = {
-  "Screenshot_20260720_195524_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195524_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195527_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195527_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195530_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195530_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195534_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195534_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195538_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195538_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195541_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195541_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195545_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195545_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195548_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195548_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195551_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195551_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195554_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195554_Messages.jpg-slideshow.webp",
-  "Screenshot_20260720_195557_Messages.jpg.jpeg": "/images/josh-mann/slideshow/Screenshot_20260720_195557_Messages.jpg-slideshow.webp",
-};
-
-function homepageSlideshowImage(image: PortfolioImage): PortfolioImage {
-  if (image.artistSlug !== "josh-mann") return image;
-
-  const slideshowSrc = joshHomepageSlideshowSources[image.filename];
-  if (!slideshowSrc) return image;
-
-  return {
-    ...image,
-    src: slideshowSrc,
-    fullSrc: image.src,
-    width: 1800,
-    height: 1200,
-    fullWidth: image.width,
-    fullHeight: image.height,
-    homepagePrepared: true,
-  };
-}
-
 const longestPortfolio = Math.max(...artists.map((artist) => artist.portfolioImages.length));
 
 const slideshowPortfolios = artists.map((artist) =>
   artist.portfolioImages
     .map((image, originalIndex) => ({ image, originalIndex }))
     .sort((a, b) => (b.image.width * b.image.height) - (a.image.width * a.image.height) || a.originalIndex - b.originalIndex)
-    .map(({ image }) => homepageSlideshowImage(image)),
+    .map(({ image }) => image),
 );
 
 export const carouselArtwork = Array.from({ length: longestPortfolio }, (_, imageIndex) =>

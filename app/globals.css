@@ -219,6 +219,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .featured-carousel { display: grid; width: min(calc(100% - 48px), 1120px); height: 100%; margin-inline: auto; grid-template-columns: minmax(320px, 360px) minmax(620px, 1fr); gap: 120px; align-items: center; background: var(--black); touch-action: pan-y; isolation: isolate; }
 .featured-carousel:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
 .featured-carousel-copy { min-width: 0; }
+.mobile-hero-logo { display: none; }
 .hero-kicker { margin-bottom: 6px; color: var(--gold-light); font-family: var(--font-serif); font-size: 1.25rem; font-style: italic; }
 .featured-carousel-copy h1 { margin-bottom: 16px; font-family: var(--font-serif); font-size: clamp(3.3rem, 4.3vw, 3.85rem); font-weight: 600; letter-spacing: -.035em; }
 .featured-carousel-copy > p:not(.hero-kicker) { margin-bottom: 24px; color: #cbc6bd; font-size: 1rem; line-height: 1.65; }
@@ -497,6 +498,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .home-hero { height: auto; }
   .featured-carousel { width: 100%; height: auto; grid-template-columns: 1fr; gap: 0; }
   .featured-carousel-copy { width: 100%; padding: 42px 16px 30px; }
+  .mobile-hero-logo { display: block; width: clamp(130px, 40vw, 160px); height: auto; margin: 0 auto 20px; object-fit: contain; }
   .featured-carousel-copy h1 { font-size: clamp(2.8rem, 12vw, 3.45rem); }
   .featured-carousel-copy > p:not(.hero-kicker) { margin-bottom: 20px; }
   .hero-meaning { max-width: 38rem; margin-top: 26px; }
