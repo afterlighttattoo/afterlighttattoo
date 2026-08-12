@@ -23,6 +23,9 @@ export default async function BookingPage({ searchParams }: { searchParams: Prom
           <p className="eyebrow">Visit the studio</p>
           <h2>{studio.name}</h2>
           <address>{studio.address.street}<br />{studio.address.city}, {studio.address.region} {studio.address.postalCode}</address>
+          <ul className="about-hours">
+            {studio.hours.map((entry) => <li key={entry.days}><span>{entry.days}</span>{entry.time}</li>)}
+          </ul>
           <ExternalActions directions className="booking-actions" />
         </aside>
       </section>

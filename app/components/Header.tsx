@@ -12,9 +12,11 @@ const leftNavigation = [
   ["Home", "/"],
   ["Artists", "/artists"],
   ["Gallery", "/gallery"],
+  ["Aftercare", "/aftercare"],
 ];
 
 const rightNavigation = [
+  ["FAQ", "/faq"],
   ["About", "/about"],
   ["Book a Consultation", "/booking"],
 ];

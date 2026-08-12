@@ -27,6 +27,9 @@ export default function AboutPage() {
         <div className="about-location">
           <p className="eyebrow">Visit the studio</p>
           <address><strong>{studio.name}</strong><br />{studio.address.street}<br />{studio.address.city}, {studio.address.region} {studio.address.postalCode}</address>
+          <ul className="about-hours">
+            {studio.hours.map((entry) => <li key={entry.days}><span>{entry.days}</span>{entry.time}</li>)}
+          </ul>
           <ExternalActions directions />
           <Link className="text-link" href="/artists">Meet the Artists</Link>
         </div>
