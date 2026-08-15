@@ -6,7 +6,7 @@ import type { Artist } from "@/app/data/artists";
 
 type Errors = Record<string, string>;
 
-const formSubmitEndpoint = "https://formsubmit.co/afterlighttattoo@outlook.com";
+const formSubmitEndpoint = "https://formsubmit.co/afterlighttattoo@aol.com";
 const productionUrl = "https://afterlighttattoo.afterlighttattoo.workers.dev";
 
 export function BookingForm({ artists, initialArtist = "" }: { artists: Artist[]; initialArtist?: string }) {
