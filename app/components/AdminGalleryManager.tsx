@@ -65,27 +65,114 @@ async function createResizedVariant(bitmap: ImageBitmap, maximumDimension: numbe
 async function createSlideshowVariant(bitmap: ImageBitmap): Promise<PreparedVariant> {
   const width = 1800;
   const height = 1200;
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
+
   const context = canvas.getContext("2d", { alpha: false });
   if (!context) throw new Error("This browser could not prepare the slideshow image.");
 
+  const drawImageInBox = (
+    mode: "contain" | "cover",
+    boxX: number,
+    boxY: number,
+    boxWidth: number,
+    boxHeight: number,
+  ) => {
+    const scale =
+      mode === "cover"
+        ? Math.max(boxWidth / bitmap.width, boxHeight / bitmap.height)
+        : Math.min(boxWidth / bitmap.width, boxHeight / bitmap.height);
+
+    const drawWidth = bitmap.width * scale;
+    const drawHeight = bitmap.height * scale;
+    const drawX = boxX + (boxWidth - drawWidth) / 2;
+    const drawY = boxY + (boxHeight - drawHeight) / 2;
+
+    context.drawImage(bitmap, drawX, drawY, drawWidth, drawHeight);
+  };
+
+  // Base background
   context.fillStyle = "#050505";
   context.fillRect(0, 0, width, height);
-  const coverScale = Math.max(width / bitmap.width, height / bitmap.height) * 1.08;
-  const backdropWidth = bitmap.width * coverScale;
-  const backdropHeight = bitmap.height * coverScale;
-  context.save();
-  context.filter = "blur(28px) brightness(0.42)";
-  context.globalAlpha = 0.62;
-  context.drawImage(bitmap, (width - backdropWidth) / 2, (height - backdropHeight) / 2, backdropWidth, backdropHeight);
-  context.restore();
-  context.fillStyle = "rgba(5, 5, 5, 0.34)";
-  context.fillRect(0, 0, width, height);
+
   context.imageSmoothingEnabled = true;
   context.imageSmoothingQuality = "high";
-  drawContained(context, bitmap, bitmap.width, bitmap.height, width, height, 0.9);
+
+  // Blurred backdrop filling entire frame
+  const backdropScale = Math.max(width / bitmap.width, height / bitmap.height) * 1.12;
+  const backdropWidth = bitmap.width * backdropScale;
+  const backdropHeight = bitmap.height * backdropScale;
+
+  context.save();
+  context.filter = "blur(34px) brightness(0.34) saturate(0.92)";
+  context.globalAlpha = 0.72;
+  context.drawImage(
+    bitmap,
+    (width - backdropWidth) / 2,
+    (height - backdropHeight) / 2,
+    backdropWidth,
+    backdropHeight,
+  );
+  context.restore();
+
+  // Slight dark wash so the sharp art stands out
+  context.fillStyle = "rgba(5, 5, 5, 0.18)";
+  context.fillRect(0, 0, width, height);
+
+  // Decide how large the SHARP foreground should be
+  const aspect = bitmap.width / bitmap.height;
+
+  let foregroundWidth = width * 0.92;
+  let foregroundHeight = height * 0.92;
+  let fitMode: "contain" | "cover" = "cover";
+
+  // Very tall images: preserve most of the piece, but still make it larger
+  if (aspect < 0.66) {
+    foregroundWidth = width * 0.58;
+    foregroundHeight = height * 0.96;
+    fitMode = "contain";
+  }
+  // Standard portrait tattoo photos (like your Rob examples)
+  else if (aspect < 0.9) {
+    foregroundWidth = width * 0.64;
+    foregroundHeight = height * 0.96;
+    fitMode = "cover";
+  }
+  // Near-square / slight portrait
+  else if (aspect < 1.15) {
+    foregroundWidth = width * 0.74;
+    foregroundHeight = height * 0.95;
+    fitMode = "cover";
+  }
+  // Landscape
+  else if (aspect < 1.55) {
+    foregroundWidth = width * 0.88;
+    foregroundHeight = height * 0.94;
+    fitMode = "cover";
+  }
+  // Very wide landscape
+  else {
+    foregroundWidth = width * 0.96;
+    foregroundHeight = height * 0.90;
+    fitMode = "contain";
+  }
+
+  const boxX = (width - foregroundWidth) / 2;
+  const boxY = (height - foregroundHeight) / 2;
+
+  // Very subtle shadow plate behind the sharp image
+  context.save();
+  context.shadowColor = "rgba(0, 0, 0, 0.32)";
+  context.shadowBlur = 28;
+  context.fillStyle = "rgba(0, 0, 0, 0.12)";
+  context.fillRect(boxX, boxY, foregroundWidth, foregroundHeight);
+  context.restore();
+
+  // Draw the sharp foreground larger than before
+  drawImageInBox(fitMode, boxX, boxY, foregroundWidth, foregroundHeight);
+
   return { blob: await canvasBlob(canvas, 0.88), width, height };
 }
 
