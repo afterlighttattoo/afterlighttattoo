@@ -5,6 +5,7 @@ import amandaProfile from "@/images/amanda-simonich/amanda.jpeg";
 import alyProfile from "@/images/aly-wisler/aly.jpeg";
 
 export type PortfolioImage = {
+  id?: string;
   src: string;
   fullSrc?: string;
   width: number;
@@ -15,6 +16,7 @@ export type PortfolioImage = {
   artistName: string;
   artistSlug: string;
   filename: string;
+  featured?: boolean;
   homepagePrepared?: boolean;
 };
 

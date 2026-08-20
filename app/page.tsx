@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArtistCard } from "@/app/components/ArtistCard";
 import { ExternalActions } from "@/app/components/ExternalActions";
-import { FeaturedArtworkCarousel } from "@/app/components/FeaturedArtworkCarousel";
+import { ManagedFeaturedArtworkCarousel } from "@/app/components/ManagedGallery";
 import { artists, carouselArtwork } from "@/app/data/artists";
 import { studio } from "@/app/data/studio";
 
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main>
       <section className="home-hero" aria-labelledby="hero-title">
-        <FeaturedArtworkCarousel images={carouselArtwork} />
+        <ManagedFeaturedArtworkCarousel artists={artists} fallbackImages={carouselArtwork} />
       </section>
 
       <section className="home-artists" aria-labelledby="artists-heading">

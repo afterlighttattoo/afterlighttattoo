@@ -27,10 +27,13 @@ const localBindingConfig = {
     ? [
         {
           binding: r2,
-          bucket_name: "site-creator-r2",
+          bucket_name: "afterlighttattoo-gallery",
         },
       ]
     : [],
+  workers_dev: false,
+  preview_urls: false,
+  routes: [{ pattern: "afterlighttattoo.com", custom_domain: true }],
 };
 
 export default defineConfig(async () => {

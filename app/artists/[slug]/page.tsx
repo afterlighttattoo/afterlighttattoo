@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageCta } from "@/app/components/PageCta";
-import { PortfolioGrid } from "@/app/components/PortfolioGrid";
+import { ManagedPortfolioGrid } from "@/app/components/ManagedGallery";
 import { SectionHeading } from "@/app/components/SectionHeading";
 import { artists, getArtist } from "@/app/data/artists";
 
@@ -62,7 +62,7 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
       <section className="featured-work section-block" id="portfolio" aria-labelledby="portfolio-heading">
         <div className="section-shell">
           <SectionHeading eyebrow={`${artist.name} portfolio`} title="Tattoo work." id="portfolio-heading" />
-          <PortfolioGrid images={artist.portfolioImages} />
+          <ManagedPortfolioGrid artist={artist} />
         </div>
       </section>
       <PageCta title={`Book with ${artist.name}`} description="Share your concept, placement, references, and availability to request a consultation." />

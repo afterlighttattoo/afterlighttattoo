@@ -11,6 +11,33 @@ function isPreloaded(index: number, activeIndex: number, length: number) {
   return index === activeIndex || index === (activeIndex - 1 + length) % length || index === (activeIndex + 1) % length;
 }
 
+function HeroCopy() {
+  return (
+    <div className="featured-carousel-copy">
+      <Image
+        className="mobile-hero-logo"
+        unoptimized
+        src="/images/branding/after-light-tattoo-logo.png"
+        alt="After Light Tattoo"
+        width={600}
+        height={600}
+        sizes="(max-width: 760px) 160px, 1px"
+      />
+      <p className="hero-kicker">Custom artwork.</p>
+      <h1 id="hero-title">Made permanent.</h1>
+      <p>Thoughtful designs. Expert craftsmanship.<br />Made after the light.</p>
+      <div className="hero-actions">
+        <Link className="button button-gold" href="/booking">Book a Consultation</Link>
+        <Link className="text-link" href="/artists">View Artists <span aria-hidden="true">→</span></Link>
+      </div>
+      <div className="hero-meaning">
+        <p className="hero-meaning-label">The meaning behind After Light</p>
+        <p className="hero-meaning-copy">After Light represents what we carry with us after a moment has passed—the memories, experiences, growth, and stories that become part of who we are. Tattoos give those stories a permanent place to live.</p>
+      </div>
+    </div>
+  );
+}
+
 export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -47,9 +74,20 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
     return () => window.clearTimeout(timer);
   }, [activeIndex, focusWithin, hovered, images.length, lightboxIndex, pageHidden, reducedMotion, userPaused]);
 
-  if (!images.length) return null;
+  if (!images.length) {
+    return (
+      <div className="featured-carousel featured-carousel-empty">
+        <HeroCopy />
+        <div className="featured-carousel-empty-artwork" aria-label="Featured tattoo artwork">
+          <Link className="text-link" href="/gallery">View Full Gallery <span aria-hidden="true">→</span></Link>
+        </div>
+      </div>
+    );
+  }
 
-  const active = images[activeIndex];
+  const safeActiveIndex = activeIndex % images.length;
+  const safeLightboxIndex = lightboxIndex === null ? null : lightboxIndex % images.length;
+  const active = images[safeActiveIndex];
 
   const selectSlide = (index: number) => {
     const nextIndex = (index + images.length) % images.length;
@@ -65,7 +103,7 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
     }
     setUserPaused(true);
     returnFocusRef.current = returnTarget;
-    setLightboxIndex(activeIndex);
+    setLightboxIndex(safeActiveIndex);
   };
 
   return (
@@ -85,36 +123,15 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft") {
             event.preventDefault();
-            selectSlide(activeIndex - 1);
+            selectSlide(safeActiveIndex - 1);
           }
           if (event.key === "ArrowRight") {
             event.preventDefault();
-            selectSlide(activeIndex + 1);
+            selectSlide(safeActiveIndex + 1);
           }
         }}
       >
-        <div className="featured-carousel-copy">
-          <Image
-            className="mobile-hero-logo"
-            unoptimized
-            src="/images/branding/after-light-tattoo-logo.png"
-            alt="After Light Tattoo"
-            width={600}
-            height={600}
-            sizes="(max-width: 760px) 160px, 1px"
-          />
-          <p className="hero-kicker">Custom artwork.</p>
-          <h1 id="hero-title">Made permanent.</h1>
-          <p>Thoughtful designs. Expert craftsmanship.<br />Made after the light.</p>
-          <div className="hero-actions">
-            <Link className="button button-gold" href="/booking">Book a Consultation</Link>
-            <Link className="text-link" href="/artists">View Artists <span aria-hidden="true">→</span></Link>
-          </div>
-          <div className="hero-meaning">
-            <p className="hero-meaning-label">The meaning behind After Light</p>
-            <p className="hero-meaning-copy">After Light represents what we carry with us after a moment has passed—the memories, experiences, growth, and stories that become part of who we are. Tattoos give those stories a permanent place to live.</p>
-          </div>
-        </div>
+        <HeroCopy />
 
         <div className="featured-carousel-gallery">
           <div className="featured-carousel-gallery-top">
@@ -143,16 +160,16 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
                 pointerStartXRef.current = null;
                 if (Math.abs(delta) < 45) return;
                 ignoreClickRef.current = true;
-                selectSlide(delta > 0 ? activeIndex - 1 : activeIndex + 1);
+                selectSlide(delta > 0 ? safeActiveIndex - 1 : safeActiveIndex + 1);
               }}
               onPointerCancel={() => { pointerStartXRef.current = null; }}
               aria-label={`Open full image: ${active.alt}`}
             >
-              {images.map((image, index) => isPreloaded(index, activeIndex, images.length) ? (
+              {images.map((image, index) => isPreloaded(index, safeActiveIndex, images.length) ? (
                 <span
-                  className={`featured-carousel-slide ${index === activeIndex ? "is-active" : ""}`.trim()}
+                  className={`featured-carousel-slide ${index === safeActiveIndex ? "is-active" : ""}`.trim()}
                   key={`${image.artistSlug}-${image.filename}`}
-                  aria-hidden={index !== activeIndex}
+                  aria-hidden={index !== safeActiveIndex}
                 >
                   {!image.homepagePrepared && (
                     <Image
@@ -172,7 +189,7 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
                     className={`artwork-foreground ${image.homepagePrepared ? "is-prepared" : ""}`.trim()}
                     unoptimized
                     src={image.src}
-                    alt={index === activeIndex ? image.alt : ""}
+                    alt={index === safeActiveIndex ? image.alt : ""}
                     width={image.width}
                     height={image.height}
                     loading="eager"
@@ -199,11 +216,11 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
               >
                 {userPaused ? <Play aria-hidden="true" size={15} /> : <Pause aria-hidden="true" size={15} />}
               </button>
-              <span className="featured-carousel-count" aria-hidden="true">{activeIndex + 1} / {images.length}</span>
-              <button className="featured-carousel-arrow" type="button" onClick={() => selectSlide(activeIndex - 1)} aria-label="Show previous artwork">
+              <span className="featured-carousel-count" aria-hidden="true">{safeActiveIndex + 1} / {images.length}</span>
+              <button className="featured-carousel-arrow" type="button" onClick={() => selectSlide(safeActiveIndex - 1)} aria-label="Show previous artwork">
                 <ChevronLeft aria-hidden="true" size={22} />
               </button>
-              <button className="featured-carousel-arrow" type="button" onClick={() => selectSlide(activeIndex + 1)} aria-label="Show next artwork">
+              <button className="featured-carousel-arrow" type="button" onClick={() => selectSlide(safeActiveIndex + 1)} aria-label="Show next artwork">
                 <ChevronRight aria-hidden="true" size={22} />
               </button>
             </div>
@@ -213,10 +230,10 @@ export function FeaturedArtworkCarousel({ images }: { images: PortfolioImage[] }
         <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
       </div>
 
-      {lightboxIndex !== null && (
+      {safeLightboxIndex !== null && (
         <ArtworkLightbox
           images={images}
-          activeIndex={lightboxIndex}
+          activeIndex={safeLightboxIndex}
           onChange={setLightboxIndex}
           onClose={() => setLightboxIndex(null)}
           returnFocusRef={returnFocusRef}

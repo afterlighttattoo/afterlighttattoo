@@ -13,7 +13,7 @@ export function GalleryExplorer({ artists, images }: { artists: Artist[]; images
         <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")} type="button">All work <span>{images.length}</span></button>
         {artists.map((artist) => (
           <button className={filter === artist.slug ? "active" : ""} onClick={() => setFilter(artist.slug)} type="button" key={artist.slug}>
-            {artist.name} <span>{artist.portfolioImages.length}</span>
+            {artist.name} <span>{images.filter((image) => image.artistSlug === artist.slug).length}</span>
           </button>
         ))}
       </div>
